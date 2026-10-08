@@ -207,8 +207,12 @@ module.exports = grammar({
     )),
 
     token_repetition_pattern: $ => seq(
-      '$', '(', repeat($._token_pattern), ')', optional(/[^+*?]+/), choice('+', '*', '?'),
+      '$', '(', repeat($._token_pattern), ')', optional($.repetition_separator), choice('+', '*', '?'),
     ),
+
+    // A macro repetition's separator, ex: the `,` of `$($e:expr),*`.  (As an
+    // anonymous regex, it wouldn't be in trees.)
+    repetition_separator: _ => /[^+*?]+/,
 
     fragment_specifier: _ => choice(
       'block', 'expr', 'expr_2021', 'ident', 'item', 'lifetime', 'literal', 'meta', 'pat',
@@ -229,7 +233,7 @@ module.exports = grammar({
     ),
 
     token_repetition: $ => seq(
-      '$', '(', repeat($._tokens), ')', optional(/[^+*?]+/), choice('+', '*', '?'),
+      '$', '(', repeat($._tokens), ')', optional($.repetition_separator), choice('+', '*', '?'),
     ),
 
     // Matches non-delimiter tokens common to both macro invocations and

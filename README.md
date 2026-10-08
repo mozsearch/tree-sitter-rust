@@ -9,6 +9,15 @@
 
 Rust grammar for [tree-sitter](https://github.com/tree-sitter/tree-sitter).
 
+## This fork
+
+This is [searchfox](https://searchfox.org)'s fork of tree-sitter-rust 0.24.2,
+for its history tokenizer, which tokenizes trees' leaves, and so needs all of
+a file's text to be in its tree:
+- Macro repetitions' separators (ex: the `,` of `$($e:expr),*`) are
+  `repetition_separator` nodes, rather than anonymous regexes, which aren't in
+  trees.
+
 ## Features
 
 - **Speed** — When initially parsing a file, `tree-sitter-rust` takes around two to three times
